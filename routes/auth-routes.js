@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const passport = require("passport");
 router.get("/login", function(req, res){
-  res.render("login");
+  res.render("login", {user: req.user});
 });
 
 router.get("/logout", function(req, res){
-  res.send("Logging out");
+  console.log("Logging out");
+  req.logout();
+  res.redirect("/");
 });
 
 router.get("/google", passport.authenticate("google", {
