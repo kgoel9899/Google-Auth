@@ -19,8 +19,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.connect(keys.mongodb.dbURI, function() {
-  console.log("connected");
-});
+  console.log("Connected to database");
+}, {useNewUrlParser: true});
 
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
