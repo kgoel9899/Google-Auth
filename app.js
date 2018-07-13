@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.set("view engine", "ejs");
@@ -30,6 +31,6 @@ app.get("/", function(req, res){
 });
 
 
-app.listen(3000, function(req, res){
+app.listen(PORT, function(req, res){
   console.log("Listening to port 3000, Server started");
 });
