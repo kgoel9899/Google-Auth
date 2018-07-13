@@ -1,7 +1,8 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
-const FacebookStrategy = require('passport-facebook');
-const GitHubStrategy = require('passport-github');
+const FacebookStrategy = require("passport-facebook");
+const GitHubStrategy = require("passport-github");
+const TwitterStrategy = require("passport-twitter");
 const keys = require("./keys");
 const User = require("../models/user-model");
 
@@ -77,6 +78,34 @@ passport.use(new GitHubStrategy({
     clientID: keys.github.clientID,
     clientSecret: keys.github.clientSecret,
     callbackURL: "/auth/github/redirect"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne({gofaId: profile.id}).then(function(currentUser) {
+      if(currentUser) {
+        console.log("User already exists:" + currentUser);
+        done(null, currentUser); //this will go to the serialize function for further steps
+      } else {
+        new User({
+          username: profile.displayName,
+          gofaId: profile.id,
+          thumbnail: profile.photos[0].value
+        }).save().then(function(newUser) {
+          console.log("Created");
+          console.log(newUser);
+          done(null, newUser); //this will go to the serialize function for further steps
+        });
+      }
+    });
+    // console.log(profile);
+  }
+));
+
+
+//twitter
+passport.use(new TwitterStrategy({
+    consumerKey: keys.twitter.consumerKey,
+    consumerSecret: keys.twitter.consumerSecret,
+    callbackURL: "/auth/twitter/redirect"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({gofaId: profile.id}).then(function(currentUser) {

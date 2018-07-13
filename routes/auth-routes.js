@@ -48,4 +48,16 @@ router.get("/github/redirect", passport.authenticate("github"), function(req, re
 });
 
 
+//twitter routes
+router.get("/twitter", passport.authenticate("twitter", {
+  scope : ["profile"]
+}));
+
+router.get("/twitter/redirect", passport.authenticate("twitter"), function(req, res){
+  // res.send("Reached callback URI");
+  console.log(req.user);
+  res.redirect("/profile");
+});
+
+
 module.exports = router;
