@@ -1,13 +1,15 @@
-const express = require("express");
-const authRoutes = require("./routes/auth-routes");
-const profileRoutes = require("./routes/profile-routes");
-const passportSetup = require("./config/passport-setup");
-const mongoose = require("mongoose");
-const keys = require("./config/keys");
-const cookieSession = require("cookie-session");
-const passport = require("passport");
-cont port = 3000;
-const app = express();
+var express = require("express");
+var authRoutes = require("./routes/auth-routes");
+var profileRoutes = require("./routes/profile-routes");
+var passportSetup = require("./config/passport-setup");
+var mongoose = require("mongoose");
+var keys = require("./config/keys");
+var cookieSession = require("cookie-session");
+var passport = require("passport");
+var PORT = process.env.PORT || 3000;
+
+var app = express();
+
 app.set("view engine", "ejs");
 
 app.use(cookieSession({
@@ -30,6 +32,6 @@ app.get("/", function(req, res){
 });
 
 
-app.listen(process.env.PORT || port, function(req, res){
+app.listen(PORT, function(req, res){
   console.log("Listening to port 3000, Server started");
 });
