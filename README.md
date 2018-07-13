@@ -1,2 +1,2 @@
 # Google-OAuth
-Google, Facebook and Github Authentication
+Google, Facebook, Github and Twitter Authentication
