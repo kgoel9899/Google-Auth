@@ -1,10 +1,10 @@
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
-const FacebookStrategy = require("passport-facebook");
-const GitHubStrategy = require("passport-github");
-const TwitterStrategy = require("passport-twitter");
-const keys = require("./keys");
-const User = require("../models/user-model");
+var passport = require("passport");
+var GoogleStrategy = require("passport-google-oauth20");
+var FacebookStrategy = require("passport-facebook");
+var GitHubStrategy = require("passport-github");
+var TwitterStrategy = require("passport-twitter");
+var keys = require("./keys");
+var User = require("../models/user-model");
 
 passport.serializeUser(function(user, done) {
   done(null, user.id); //pass the id to the next stage
