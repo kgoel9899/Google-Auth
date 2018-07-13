@@ -34,4 +34,18 @@ router.get("/facebook/redirect", passport.authenticate("facebook"), function(req
   console.log(req.user);
   res.redirect("/profile");
 });
+
+
+//github routes
+router.get("/github", passport.authenticate("github", {
+  scope : ["profile"]
+}));
+
+router.get("/github/redirect", passport.authenticate("github"), function(req, res){
+  // res.send("Reached callback URI");
+  console.log(req.user);
+  res.redirect("/profile");
+});
+
+
 module.exports = router;
