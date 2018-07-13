@@ -1,6 +1,6 @@
-const router = require("express").Router();
+var router = require("express").Router();
 
-const authCheck = function(req, res, next) {
+var authCheck = function(req, res, next) {
   if(!req.user) {
     res.redirect("/auth/login");
   } else {
