@@ -3,13 +3,14 @@
     <head>
         <meta charset="utf-8">
         <title>Login</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
             body{
                 font-family: arial;
                 margin: 0;
             }
             nav{
-                background: #ff5353;
+                background: #ff00ff;
                 padding: 20px 10px;
             }
             nav ul{
@@ -37,11 +38,18 @@
                 color: #333;
             }
             .google-btn{
-                color: #fff;
+                color: white;
                 text-decoration: none;
                 font-size: 18px;
                 padding: 10px;
-                background: #ff5353;
+                background: #DB4437;
+            }
+            .facebook-btn{
+                color: white;
+                text-decoration: none;
+                font-size: 18px;
+                padding: 10px;
+                background: #3B5998;
             }
         </style>
     </head>
@@ -62,6 +70,9 @@
         </header>
         <main>
             <a class="google-btn" href="/auth/google">Google+</a>
+        </main>
+        <main>
+          <a class="facebook-btn" href="/auth/facebook">Facebook</a>
         </main>
     </body>
 </html>

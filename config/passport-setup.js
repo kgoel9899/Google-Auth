@@ -1,5 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
+const FacebookStrategy = require('passport-facebook');
 const keys = require("./keys");
 const User = require("../models/user-model");
 
@@ -13,27 +14,58 @@ passport.deserializeUser(function(id, done) {
   })
 });
 
+
+//google
 passport.use(new GoogleStrategy({
   callbackURL: "/auth/google/redirect",
   clientID: keys.google.clientID,
   clientSecret: keys.google.clientSecret
 }, function(accessToken, refreshToken, profile, done) {
-  User.findOne({googleId: profile.id}).then(function(currentUser) {
+  User.findOne({gofaId: profile.id}).then(function(currentUser) {
     if(currentUser) {
       console.log("User already exists:" + currentUser);
       done(null, currentUser); //this will go to the serialize function for further steps
     } else {
       new User({
         username: profile.displayName,
-        googleId: profile.id,
+        gofaId: profile.id,
         thumbnail: profile._json.image.url
       }).save().then(function(newUser) {
         console.log("Created");
         console.log(newUser);
-        done(null, newUser); ////this will go to the serialize function for further steps
+        done(null, newUser); //this will go to the serialize function for further steps
       });
     }
   });
   // console.log(profile);
 }
+));
+
+
+//facebook
+passport.use(new FacebookStrategy({
+    clientID: keys.facebook.clientID,
+    clientSecret: keys.facebook.clientSecret,
+    callbackURL: "/auth/facebook/redirect",
+    profileFields   : ["id", "displayName", "name", "gender" , "email", "photos"],
+    enableProof: true
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne({gofaId: profile.id}).then(function(currentUser) {
+      if(currentUser) {
+        console.log("User already exists:" + currentUser);
+        done(null, currentUser); //this will go to the serialize function for further steps
+      } else {
+        new User({
+          username: profile.name.givenName + ' ' + profile.name.familyName,
+          gofaId: profile.id,
+          thumbnail: profile.photos[0].value
+        }).save().then(function(newUser) {
+          console.log("Created");
+          console.log(newUser);
+          done(null, newUser); ////this will go to the serialize function for further steps
+        });
+      }
+    });
+  }
 ));

@@ -10,10 +10,11 @@ router.get("/logout", function(req, res){
   res.redirect("/");
 });
 
+
+//google routes
 router.get("/google", passport.authenticate("google", {
   scope: ["profile"]
 }));
-
 
 //this route is handling everything(cookies etc)
 router.get("/google/redirect", passport.authenticate("google"), function(req, res) {
@@ -22,4 +23,15 @@ router.get("/google/redirect", passport.authenticate("google"), function(req, re
   res.redirect("/profile");
 });
 
+
+//facebook routes
+router.get("/facebook", passport.authenticate("facebook", {
+  scope : ["email", "public_profile"]
+}));
+
+router.get("/facebook/redirect", passport.authenticate("facebook"), function(req, res){
+  // res.send("Reached callback URI");
+  console.log(req.user);
+  res.redirect("/profile");
+});
 module.exports = router;
